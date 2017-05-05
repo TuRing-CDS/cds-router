@@ -1,0 +1,22 @@
+{
+  "name": "cds-router",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TuRing-CDS/cds-router.git"
+  },
+  "author": "iamee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TuRing-CDS/cds-router/issues"
+  },
+  "homepage": "https://github.com/TuRing-CDS/cds-router#readme",
+  "dependencies": {
+    "debug": "^2.6.6"
+  }
+}
