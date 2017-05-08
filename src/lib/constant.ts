@@ -1,55 +1,21 @@
+import {Param} from "./interface";
 /**
- * Created by Z on 2017-05-06.
+ * Created by Z on 2017-05-08.
  */
 
-import {Options} from './interface';
-
-/**
- * Controller
- * @type {symbol}
- */
 export const TAG_CONTROLLER = Symbol('Controller');
 
-/**
- * Middleware
- * @type {symbol}
- */
-export const TAG_MIDDLEWARE = Symbol('Middleware');
+export const TAG_ROUTER = Symbol('Controller');
 
-/**
- * Options
- * @type {symbol}
- */
-export const TAG_OPTIONS = Symbol('Options');
-
-/**
- * Schema
- * @type {symbol}
- */
-export const TAG_SCHEMA = Symbol('Schema');
-
-/**
- * Router
- * @type {symbol}
- */
-export const TAG_ROUTER = Symbol('Router');
-
-/**
- * Description
- * @type {symbol}
- */
-export const TAG_DESCRIPTION = Symbol('Description');
-
-/**
- * Param
- * @type {symbol}
- */
 export const TAG_PARAM = Symbol('Param');
 
-/**
- * Default Options
- * @type {{isExpose: boolean}}
- */
-export const DEFAULT_OPTIONS: Options = {
-    isExpose: true
-};
+export const TAG_SUMMARY = Symbol('Summary');
+
+export const TAG_RESPONSE = Symbol('Response');
+
+export const TAG_DEFINITION = Symbol('Definition');
+
+export const TAG_METHOD_MIDDLE = Symbol('MethodMiddle');
+
+export const TAG_MODEL_MIDDLE = Symbol('ModelMiddle');
+
