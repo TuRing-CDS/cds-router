@@ -10,8 +10,12 @@ export declare class Router {
     method: string;
     key: string;
     path: string;
-    handle: string;
-    regexp?: pathToRegexp.PathRegExp
+    handle: Function;
+    // regexp?: pathToRegexp.PathRegExp
+}
+
+export declare class Layer {
+    methods: Map<string,Function>;
 }
 
 export enum ENUM_PARAM_IN{
@@ -23,10 +27,11 @@ export enum ENUM_PARAM_IN{
 
 export declare class Param {
     name?: string;
-    type: joi.Schema;
+    type?: joi.Schema;
     in: ENUM_PARAM_IN;
     description?: string;
     required?: boolean;
+    schema?: Schema
 }
 
 export class Schema {

@@ -1,4 +1,5 @@
 import {Param, ENUM_PARAM_IN} from "./interface";
+import {string} from "joi";
 /**
  * Created by Z on 2017-05-08.
  */
@@ -23,10 +24,9 @@ export const TAG_DEPRECATED = Symbol('deprecated');
 
 export const DEFAULT_PARAM_OPTS: Param = {
     required: false,
-    type: 'string',
+    type: string(),
     in: ENUM_PARAM_IN.query,
-    description: '',
-    name: ''
+    description: ''
 };
 
 export const DEFAULT_SWAGGER: any = {
