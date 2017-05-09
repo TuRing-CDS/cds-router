@@ -26,7 +26,7 @@ export function param(name: string, param: Param = DEFAULT_PARAM_OPTS) {
                 router.parameters.push(Object.assign({
                     name: param.name,
                 }, param, {
-                    schema: Object.assign({type: 'object'}, Schema.prototype.toJSON.call({$ref: param.schema}))
+                    schema: Schema.prototype.toJSON.call({$ref: param.schema})
                 }, {in: ENUM_PARAM_IN[param.in]}));
             } else {
                 router.parameters.push(Object.assign({name: param.name}, param, j2s(param.type).swagger, {in: ENUM_PARAM_IN[param.in]}));
