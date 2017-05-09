@@ -28,3 +28,11 @@ export const DEFAULT_PARAM_OPTS: Param = {
     description: '',
     name: ''
 };
+
+export const DEFAULT_SWAGGER: any = {
+    swagger: "2.0",
+    paths: {},
+    schemes: ['https', 'http'],
+    securityDefinitions:{},
+    definitions:{},
+};

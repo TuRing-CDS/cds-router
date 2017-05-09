@@ -43,4 +43,4 @@ router.loadController(MyBase);
 
 router.loadDefinition(User);
 
-console.log(router._routers[0])
+console.log(router.getSwagger())
