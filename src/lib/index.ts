@@ -9,17 +9,17 @@ import {Router} from "./interface";
 
 import * as pathToRegexp from 'path-to-regexp';
 
-export * from './method';
-
 export * from './constant';
-
 export * from './controller';
-
+export * from './definitions';
+export * from './deprecated';
+export * from './interface';
+export * from './method';
+export * from './middleware';
 export * from './param';
-
 export * from './response';
-
 export * from './summary';
+
 
 const log = debug('cds-router');
 

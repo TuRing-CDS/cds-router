@@ -13,7 +13,7 @@ import {methodRegist} from "./middleware";
  * @param description
  * @returns {(target:any, key:string)=>undefined}
  */
-export function response(code: number, schema?: Schema, description?: string,) {
+export function response(code: number, schema?: Schema, description?: string) {
     return function (target: any, key: string) {
         let responses: Map<string,Response[]> = target[TAG_RESPONSE] || new Map();
         if (!responses.has(key)) {

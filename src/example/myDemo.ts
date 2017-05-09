@@ -8,7 +8,6 @@ import {string} from 'joi';
 import {Schema} from "joi";
 
 
-
 @definition()
 class User {
     uname: Schema = string().min(10).max(20).default('1232432543');
@@ -19,8 +18,7 @@ class User {
 class MyBase {
 
     @get('/')
-    @param({
-        name: 'username',
+    @param('username', {
         type: String,
         description: '',
         isRequired: true,
@@ -32,6 +30,7 @@ class MyBase {
             $ref: User
         }
     })
+    @summary('这个是描述')
     doGet() {
 
     }
@@ -44,4 +43,4 @@ router.loadController(MyBase);
 
 router.loadDefinition(User);
 
-console.log(router._routers[0].responses['200']);
+console.log(router._routers[0])

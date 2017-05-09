@@ -21,12 +21,13 @@ export enum ENUM_PARAM_IN{
 }
 
 export declare class Param {
-    name: string;
+    name?: string;
     type: any;
     in: ENUM_PARAM_IN;
     opts?: any;
     description?: string;
     isRequired?: boolean;
+    preFunction?: Function;
 }
 
 export class Schema {
@@ -40,8 +41,7 @@ Schema.prototype.toJSON = function () {
     if (this.$ref && this.$ref[TAG_DEFINITION]) {
         this.$ref = this.$ref[TAG_DEFINITION];
     }
-    console.log('===>', this.$ref && this.$ref[TAG_DEFINITION]);
-    return Object.assign({}, this, {$ref: this.$ref ? '#/definitions/' + this.$ref : this.$ref});
+    return Object.assign({}, this, this.items ? {items: Schema.prototype.toJSON.call(this.items)} : {}, {$ref: this.$ref ? '#/definitions/' + this.$ref : this.$ref});
 };
 
 export declare class Response {

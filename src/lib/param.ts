@@ -2,7 +2,7 @@
  * Created by Z on 2017-05-08.
  */
 
-import {TAG_PARAM, TAG_METHOD_MIDDLE} from "./constant";
+import {TAG_PARAM, TAG_METHOD_MIDDLE, DEFAULT_PARAM_OPTS} from "./constant";
 import {Param, ENUM_PARAM_IN} from "./interface";
 import {methodRegist} from "./middleware";
 /**
@@ -10,9 +10,9 @@ import {methodRegist} from "./middleware";
  * @param name
  * @returns {(target:any, key:string)}
  */
-export function param(param: Param) {
-
+export function param(name: string, param: Param = DEFAULT_PARAM_OPTS) {
     return function (target: any, key: string) {
+        param = Object.assign(param, {name});
         let params: Map<string,Param[]> = target[TAG_PARAM] || new Map();
         let tempParams: Param[] = [];
         if (params.has(key)) {
