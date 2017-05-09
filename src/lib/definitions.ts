@@ -1,6 +1,6 @@
 import {TAG_DEFINITION} from "./constant";
 import {modelRegist} from "./middleware";
-import * as j2s from 'joi-to-swagger';
+import * as j2s from "joi-to-swagger";
 /**
  * Created by Z on 2017-05-08.
  */
