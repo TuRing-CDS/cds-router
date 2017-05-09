@@ -1,5 +1,6 @@
 import {TAG_DEFINITION} from "./constant";
 import {modelRegist} from "./middleware";
+import * as j2s from 'joi-to-swagger';
 /**
  * Created by Z on 2017-05-08.
  */
@@ -17,11 +18,7 @@ export function definition(name?: string) {
             let properties = {};
             Object.keys(definition).forEach((key) => {
                 let item = definition[key];
-                let value = Object.assign({
-                    type: item._type
-                }, item._flags);
-
-                properties[key] = value
+                properties[key] = j2s(item).swagger
             });
             swagger['definitions'][name] = {type: 'object', properties};
         });

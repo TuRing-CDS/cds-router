@@ -22,8 +22,8 @@ export const TAG_MODEL_MIDDLE = Symbol('ModelMiddle');
 export const TAG_DEPRECATED = Symbol('deprecated');
 
 export const DEFAULT_PARAM_OPTS: Param = {
-    isRequired: false,
-    type: String,
+    required: false,
+    type: 'string',
     in: ENUM_PARAM_IN.query,
     description: '',
     name: ''
@@ -31,8 +31,13 @@ export const DEFAULT_PARAM_OPTS: Param = {
 
 export const DEFAULT_SWAGGER: any = {
     swagger: "2.0",
-    paths: {},
+    info: {
+        description: "CDS-ROUTER",
+        title: "CDS-ROUTER",
+        version: 'Beta-v2'
+    },
     schemes: ['https', 'http'],
-    securityDefinitions:{},
-    definitions:{},
+    paths: {},
+    securityDefinitions: {},
+    definitions: {},
 };

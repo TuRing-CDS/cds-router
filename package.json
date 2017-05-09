@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/TuRing-CDS/cds-router#readme",
   "dependencies": {
-    "debug": "^2.6.6"
+    "debug": "^2.6.6",
+    "joi-to-swagger": "^1.1.0"
   }
 }

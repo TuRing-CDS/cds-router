@@ -4,6 +4,7 @@
 
 import * as pathToRegexp from 'path-to-regexp';
 import {TAG_DEFINITION} from "./constant";
+import * as joi from 'joi';
 
 export declare class Router {
     method: string;
@@ -22,12 +23,10 @@ export enum ENUM_PARAM_IN{
 
 export declare class Param {
     name?: string;
-    type: any;
+    type: joi.Schema;
     in: ENUM_PARAM_IN;
-    opts?: any;
     description?: string;
-    isRequired?: boolean;
-    preFunction?: Function;
+    required?: boolean;
 }
 
 export class Schema {

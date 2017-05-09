@@ -1,7 +1,7 @@
 /**
  * Created by Z on 2017-05-08.
  */
-
+import * as j2s from 'joi-to-swagger';
 import {TAG_PARAM, TAG_METHOD_MIDDLE, DEFAULT_PARAM_OPTS} from "./constant";
 import {Param, ENUM_PARAM_IN} from "./interface";
 import {methodRegist} from "./middleware";
@@ -22,9 +22,7 @@ export function param(name: string, param: Param = DEFAULT_PARAM_OPTS) {
             if (!router.parameters) {
                 router.parameters = [];
             }
-            router.parameters.push(Object.assign({}, param, {
-                in: ENUM_PARAM_IN[param.in]
-            }));
+            router.parameters.push(Object.assign({name: param.name}, param, j2s(param.type).swagger, {in: ENUM_PARAM_IN[param.in]}));
         });
         tempParams.push(param);
         params.set(key, tempParams);

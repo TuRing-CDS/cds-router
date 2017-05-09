@@ -10,8 +10,8 @@ import {Schema} from "joi";
 
 @definition()
 class User {
-    uname: Schema = string().min(10).max(20).default('1232432543');
-    upass: Schema = string().hostname()
+    userName: Schema = string().min(10).max(20).default('1232432543');
+    passWord: Schema = string().hostname()
 }
 
 @controller('/v3/api')
@@ -19,9 +19,9 @@ class MyBase {
 
     @get('/')
     @param('username', {
-        type: String,
-        description: '',
-        isRequired: true,
+        type: string().default('??'),
+        description: '用户名',
+        required: true,
         in: ENUM_PARAM_IN.query
     })
     @response(200, {
@@ -43,4 +43,4 @@ router.loadController(MyBase);
 
 router.loadDefinition(User);
 
-console.log(router.getSwagger())
+console.log(JSON.stringify(router.getSwagger()));
