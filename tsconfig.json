@@ -6,7 +6,7 @@
         "sourceMap": true,
         "sourceRoot": "src",
         "outDir": "dist",
-        "watch": true,
+//        "watch": true,
         "experimentalDecorators": true
     }
 }
