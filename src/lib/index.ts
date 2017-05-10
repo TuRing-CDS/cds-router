@@ -43,9 +43,10 @@ export class CDSRouter {
         if (Controller[TAG_CONTROLLER]) {
             let controller = new Controller();
             (controller[TAG_ROUTER] || []).forEach((item: Router) => {
+                let fullPath = (Controller[TAG_CONTROLLER] + item.path);
                 let path = (Controller[TAG_CONTROLLER] + item.path).replace(this.swagger.basePath, '');
                 let method = item.method;
-                let regexp = pathToRegexp(path);
+                let regexp = pathToRegexp(fullPath);
                 if (!this.layers.has(path)) {
                     this.layers.set(path, {
                         methods: new Map(),

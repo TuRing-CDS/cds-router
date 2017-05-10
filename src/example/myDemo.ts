@@ -1,9 +1,7 @@
 /**
  * Created by Z on 2017-05-08.
  */
-import {get, controller, param, summary, CDSRouter, response} from '../lib';
-import {ENUM_PARAM_IN} from "../lib/interface";
-import {definition} from "../lib/definitions";
+import {get, controller, param,definition, summary, CDSRouter, response,ENUM_PARAM_IN,} from '../lib';
 import {string} from "joi";
 import {post} from "../lib/method";
 import * as Application from 'koa';
