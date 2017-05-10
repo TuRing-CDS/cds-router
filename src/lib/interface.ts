@@ -11,11 +11,11 @@ export declare class Router {
     key: string;
     path: string;
     handle: Function;
-    // regexp?: pathToRegexp.PathRegExp
 }
 
 export declare class Layer {
     methods: Map<string,Function>;
+    regexp: pathToRegexp.PathRegExp;
 }
 
 export enum ENUM_PARAM_IN{

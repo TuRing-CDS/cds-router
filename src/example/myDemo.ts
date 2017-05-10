@@ -6,6 +6,9 @@ import {ENUM_PARAM_IN} from "../lib/interface";
 import {definition} from "../lib/definitions";
 import {string} from "joi";
 import {post} from "../lib/method";
+import * as Application from 'koa';
+
+const koa = new Application();
 
 
 @definition()
@@ -31,8 +34,14 @@ class MyBase {
         }
     })
     @summary('这个是描述')
-    doGet() {
-
+    async doGet(ctx) {
+        let p = new Promise((resolve) => {
+            setTimeout(() => {
+                ctx.body = {ctx};
+                resolve();
+            }, 5000);
+        });
+        await p;
     }
 
     @post('/')
@@ -56,16 +65,20 @@ router.loadController(MyBase);
 
 router.loadDefinition(User);
 
-const ctx = {
-    path: '/',
-    method: 'get',
-    query: {},
-    body: {},
-    headers: {}
-}
+koa.use(router.routers());
 
-router.routers()(ctx, async function (ctx) {
-    console.log('next', ctx);
-}).then(console.log).catch(console.error);
+koa.listen(3008);
 
-console.log(JSON.stringify(router.getSwagger()))
+// const ctx = {
+//     path: '/',
+//     method: 'get',
+//     query: {},
+//     body: {},
+//     headers: {}
+// }
+
+// router.routers()(ctx, async function (ctx) {
+//     console.log('next', ctx);
+// }).then(console.log).catch(console.error);
+
+// console.log(JSON.stringify(router.getSwagger()))

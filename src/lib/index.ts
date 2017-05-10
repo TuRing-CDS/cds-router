@@ -36,7 +36,7 @@ export class CDSRouter {
 
     swagger: any = DEFAULT_SWAGGER;
 
-    layers: Map<pathToRegexp.PathRegExp,Layer> = new Map();
+    layers: Map<string,Layer> = new Map();
 
     loadController(Controller) {
         log(`load controller:`, Controller);
@@ -44,14 +44,15 @@ export class CDSRouter {
             let controller = new Controller();
             (controller[TAG_ROUTER] || []).forEach((item: Router) => {
                 let path = (Controller[TAG_CONTROLLER] + item.path).replace(this.swagger.basePath, '');
-                let method = item.method.toLowerCase();
+                let method = item.method;
                 let regexp = pathToRegexp(path);
-                if (!this.layers.has(regexp)) {
-                    this.layers.set(regexp, {
-                        methods: new Map()
+                if (!this.layers.has(path)) {
+                    this.layers.set(path, {
+                        methods: new Map(),
+                        regexp
                     });
                 }
-                this.layers.get(regexp).methods.set(method, item.handle);
+                this.layers.get(path).methods.set(method, item.handle);
                 if (!this.swagger.paths[path]) {
                     this.swagger.paths[path] = {};
                 }
@@ -79,8 +80,23 @@ export class CDSRouter {
         const self = this;
         return async function (ctx: any, next?: Function) {
             log('%s %s', ctx.method, ctx.path);
-            console.log('===>', self.layers.keys());
-            if (next) await next(ctx);
+            let layers = [...self.layers.entries()];
+            let item: any[] = null;
+            while ((item = layers.shift()) != null) {
+                let layer: Layer = item[1];
+                if (layer.regexp.exec(ctx.path)) {
+                    if (layer.methods.has(ctx.method)) {
+                        await layer.methods.get(ctx.method)(ctx, next);
+                        if (next) await next;
+                        return ctx;
+                    } else {
+                        ctx.status = 405;
+                        return ctx;
+                    }
+                }
+            }
+            ctx.status = 404;
+            if (next) await next;
         }
     }
 

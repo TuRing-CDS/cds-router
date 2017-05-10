@@ -2,7 +2,7 @@
  * Created by Z on 2017-05-08.
  */
 
-import {TAG_CONTROLLER, TAG_METHOD_MIDDLE} from "./constant";
+import {TAG_CONTROLLER} from "./constant";
 
 /**
  * Controller

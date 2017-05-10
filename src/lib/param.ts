@@ -2,7 +2,7 @@
  * Created by Z on 2017-05-08.
  */
 import * as j2s from 'joi-to-swagger';
-import {TAG_PARAM, TAG_METHOD_MIDDLE, DEFAULT_PARAM_OPTS, TAG_DEFINITION} from "./constant";
+import {TAG_PARAM, DEFAULT_PARAM_OPTS} from "./constant";
 import {Param, ENUM_PARAM_IN, Schema} from "./interface";
 import {methodRegist} from "./middleware";
 /**

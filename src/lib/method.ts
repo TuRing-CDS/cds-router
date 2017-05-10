@@ -4,7 +4,6 @@
 
 import {TAG_ROUTER} from "./constant";
 import {Router} from "./interface";
-import * as pathToRegexp from 'path-to-regexp';
 
 /**
  * Method
