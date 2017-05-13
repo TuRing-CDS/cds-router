@@ -7,8 +7,8 @@ import {expect} from 'chai';
 import {UserController} from './init/index';
 
 import 'mocha';
-import {TAG_SUMMARY} from "../lib/summary";
-import {TAG_DETAIL} from "../lib/detail";
+import {TAG_SUMMARY} from "../lib/decorators/summary";
+import {TAG_DETAIL} from "../lib/decorators/detail";
 
 const userController = new UserController();
 

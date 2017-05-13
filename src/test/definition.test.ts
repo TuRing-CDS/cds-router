@@ -7,7 +7,7 @@ import {expect} from 'chai';
 import {UserSchema} from './init/index';
 
 import 'mocha';
-import {TAG_JOI_VALIDATE} from "../lib/definition";
+import {TAG_JOI_VALIDATE} from "../lib/decorators/definition";
 
 describe('Definition', () => {
 

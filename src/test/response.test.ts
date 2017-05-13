@@ -6,7 +6,7 @@ import {expect} from 'chai';
 import {UserController} from './init/index';
 
 import 'mocha';
-import {TAG_RESPONSE, TAG_RESPONSE_CHECK} from "../lib/response";
+import {TAG_RESPONSE, TAG_RESPONSE_CHECK} from "../lib/decorators/response";
 
 const userController = new UserController();
 const input = {

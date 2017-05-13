@@ -4,6 +4,7 @@
 
 import * as joi from 'joi';
 import {Schema} from "joi";
+import {regist} from "../utils/index";
 
 /**
  * ENUM_PARAM_IN
@@ -70,6 +71,13 @@ export function param(name?: string, param?: Param): MethodDecorator {
                 return joi.validate(input, schema);
             }) && (target[TAG_CHECK] = checks);
         }
+
+        regist(target, key, (router) => {
+            let parameters = router.parameters || [];
+            // joi-to-swagger
+            parameters.push(Object.assign({in: ENUM_PARAM_IN[param.in]}, {})) && (router.parameters = parameters);
+        });
+
         params.get(key).set(name, param) && (target[TAG_PARAM] = params);
     }
 }

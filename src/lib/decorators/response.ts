@@ -1,6 +1,7 @@
 import {validate} from "joi";
 import {TAG_DEFINITION, definition} from "./definition";
 import {string} from "joi";
+import {regist} from "../utils/index";
 /**
  * Created by iZhui on 2017/5/13.
  */
@@ -27,6 +28,14 @@ export function response(code: Number, response?: any): MethodDecorator {
         if (!checks.has(key)) {
             checks.set(key, new Map());
         }
+        regist(target, key, (router) => {
+            let responses = router.responses || {};
+            if(response[TAG_DEFINITION]){
+                responses = new responses();
+            }
+            // joi-to-swagger
+            responses[code.toString()] = Object.assign({}, response);
+        });
         responses.get(key).set(code, response) && ( target[TAG_RESPONSE] = responses);
         checks.get(key).set(code, (input) => {
             if (!response) {

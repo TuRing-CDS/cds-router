@@ -2,17 +2,17 @@
  * Created by iZhui on 2017/5/12.
  */
 
-import {controller, TAG_CONTROLLER} from '../../lib/controller';
-import {get, post, del} from "../../lib/method";
-import {definition} from "../../lib/definition";
+import {controller, TAG_CONTROLLER} from '../../lib/decorators/controller';
+import {get, post, del} from "../../lib/decorators/method";
+import {definition} from "../../lib/decorators/definition";
 import * as joi from 'joi';
 import {Schema} from "joi";
-import {param, ENUM_PARAM_IN} from "../../lib/param";
+import {param, ENUM_PARAM_IN} from "../../lib/decorators/param";
 import {string} from "joi";
-import {tag} from "../../lib/tag";
-import {summary} from "../../lib/summary";
-import {response} from "../../lib/response";
-import {detail} from "../../lib/detail";
+import {tag} from "../../lib/decorators/tag";
+import {summary} from "../../lib/decorators/summary";
+import {response} from "../../lib/decorators/response";
+import {detail} from "../../lib/decorators/detail";
 
 @definition('User')
 export class UserSchema {
