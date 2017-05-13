@@ -10,6 +10,17 @@ import {Schema} from "joi";
 import {param, ENUM_PARAM_IN} from "../../lib/param";
 import {string} from "joi";
 import {tag} from "../../lib/tag";
+import {summary} from "../../lib/summary";
+import {response} from "../../lib/response";
+
+@definition('User')
+export class UserSchema {
+    userName: Schema = joi.string().min(6).max(16).required().uppercase();
+    userPass: Schema = joi.string().min(6).max(16).required();
+    userAge: Schema = joi.number().greater(18).required();
+    userGender: Schema = joi.string().valid(['Female', 'Male']);
+    userEmail: Schema = joi.string().email();
+}
 
 @controller('/v3/api')
 export class BaseController {
@@ -29,16 +40,10 @@ export class UserController extends BaseController {
     @param('userPass', {in: ENUM_PARAM_IN.query, description: '密码', schema: string().required()})
     @tag('User')
     @tag('Login')
+    @summary("This's summary")
+    @response(200, UserSchema)
     index() {
 
     }
 }
 
-@definition('User')
-export class UserSchema {
-    userName: Schema = joi.string().min(6).max(16).required().uppercase();
-    userPass: Schema = joi.string().min(6).max(16).required();
-    userAge: Schema = joi.number().greater(18).required();
-    userGender: Schema = joi.string().valid(['Female', 'Male']);
-    userEmail: Schema = joi.string().email();
-}

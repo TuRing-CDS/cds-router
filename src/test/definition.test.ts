@@ -1,7 +1,6 @@
 /**
  * Created by iZhui on 2017/5/12.
  */
-import {controller, TAG_CONTROLLER} from '../lib/controller';
 
 import {expect} from 'chai';
 
@@ -9,8 +8,6 @@ import {UserSchema} from './init/index';
 
 import 'mocha';
 import {TAG_JOI_VALIDATE} from "../lib/definition";
-import * as joi from 'joi';
-import {string} from "joi";
 
 describe('Definition', () => {
 

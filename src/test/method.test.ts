@@ -2,8 +2,6 @@
  * Created by iZhui on 2017/5/12.
  */
 
-import {controller, TAG_CONTROLLER} from '../lib/controller';
-
 import {expect} from 'chai';
 
 import {BaseController, UserController} from './init/index';
