@@ -12,6 +12,7 @@ import {string} from "joi";
 import {tag} from "../../lib/tag";
 import {summary} from "../../lib/summary";
 import {response} from "../../lib/response";
+import {detail} from "../../lib/detail";
 
 @definition('User')
 export class UserSchema {
@@ -41,7 +42,9 @@ export class UserController extends BaseController {
     @tag('User')
     @tag('Login')
     @summary("This's summary")
+    @detail("This's detail")
     @response(200, UserSchema)
+    @response(404)
     index() {
 
     }
