@@ -1,5 +1,10 @@
 {
   "dependencies": {
+    "chai": "registry:npm/chai#3.5.0+20160723033700",
+    "joi": "registry:dt/joi#10.0.0+20170211105955",
     "lodash": "registry:dt/lodash#4.14.0+20170324155812"
+  },
+  "globalDependencies": {
+    "mocha": "registry:dt/mocha#2.2.5+20170311011848"
   }
 }
