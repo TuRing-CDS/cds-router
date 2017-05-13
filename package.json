@@ -5,7 +5,7 @@
   "main": "dist/lib/index.js",
   "scripts": {
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha -r ./node_modules/ts-node/register src/test/**/*.test.ts"
   },
   "repository": {
     "type": "git",
@@ -18,8 +18,16 @@
   },
   "homepage": "https://github.com/TuRing-CDS/cds-router#readme",
   "dependencies": {
-    "debug": "^2.6.6",
-    "joi": "^10.4.1",
-    "joi-to-swagger": "^1.1.0"
+    "@types/joi": "^10.3.2",
+    "joi": "^10.4.1"
+  },
+  "devDependencies": {
+    "@types/chai": "^3.5.2",
+    "@types/mocha": "^2.2.41",
+    "chai": "^3.5.0",
+    "mocha": "^3.3.0",
+    "ts-node": "^3.0.4",
+    "typescript": "^2.3.2",
+    "typings": "^2.1.1"
   }
 }

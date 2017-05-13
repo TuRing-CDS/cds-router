@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "joi": "registry:dt/joi#10.0.0+20170211105955",
-    "lodash": "registry:dt/lodash#4.14.0+20170324155812"
-  }
-}
