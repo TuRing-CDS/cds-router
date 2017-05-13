@@ -75,7 +75,7 @@ export function param(name?: string, param?: Param): MethodDecorator {
         regist(target, key, (router) => {
             let parameters = router.parameters || [];
             // joi-to-swagger
-            parameters.push(Object.assign({in: ENUM_PARAM_IN[param.in]}, {})) && (router.parameters = parameters);
+            parameters.push(Object.assign({in: ENUM_PARAM_IN[param.in], name}, {})) && (router.parameters = parameters);
         });
 
         params.get(key).set(name, param) && (target[TAG_PARAM] = params);

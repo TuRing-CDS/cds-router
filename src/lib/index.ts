@@ -22,10 +22,13 @@ export class Router {
                 const router = {};
                 methods.forEach((key, method) => {
                     router[method] = controller[key].bind(controller);
+                    if (regists) {
+                        regists.has(key) && [...regists.get(key)].forEach((deal) => {
+                            deal(router, this.swagger);
+                        });
+                    }
                 });
-                if(regists){
-                    console.log(regists)
-                }
+
                 console.log(router);
             })
         }
