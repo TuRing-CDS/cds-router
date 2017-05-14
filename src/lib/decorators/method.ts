@@ -32,22 +32,22 @@ export function method(method?: string, path?: string): MethodDecorator {
  * Get
  * @param path
  */
-export const get = (path?: string) => method('GET', path);
+export const get = (path?: string) => method('get', path);
 
 /**
  * Put
  * @param path
  */
-export const put = (path?: string) => method('PUT', path);
+export const put = (path?: string) => method('put', path);
 
 /**
  * Delete
  * @param path
  */
-export const del = (path?: string) => method('DELETE', path);
+export const del = (path?: string) => method('del', path);
 
 /**
  * Post
  * @param path
  */
-export const post = (path?: string) => method('POST', path);
+export const post = (path?: string) => method('post', path);

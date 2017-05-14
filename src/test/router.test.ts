@@ -4,16 +4,16 @@
 import {expect} from 'chai';
 
 import {UserController, UserSchema} from './init/index';
-
+import * as koa from 'koa';
 import 'mocha';
 import {Router} from "../lib/index";
 
 describe('Router', () => {
     const router = new Router();
-    it('what', () => {
-        router.loadDefinition(UserSchema);
-        router.loadController(UserController);
+    router.loadDefinition(UserSchema);
+    router.loadController(UserController);
+    const app = new koa();
 
-        console.log(router.swagger)
-    })
+
+
 });

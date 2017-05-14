@@ -6,6 +6,8 @@ export const TAG_MIDDLE_METHOD = Symbol('MiddleMethod');
 
 export const TAG_MIDDLE_GLOBAL = Symbol('MiddleGlobal');
 
+export const TAG_MIDDLEWARE = Symbol('Middleware');
+
 /**
  * Regist Method
  * @param target
@@ -28,4 +30,12 @@ export function registMethod(target: any, key: string, deal: Function) {
 export function registGlobal(target: any, deal: Function) {
     const temp: Set<Function> = target[TAG_MIDDLE_GLOBAL] || new Set();
     temp.add(deal) && (target[TAG_MIDDLE_GLOBAL] = temp);
+}
+
+export function registMiddleware(target: any, key: string, deal: Function) {
+    const temp: Map<string,Set<Function>> = target[TAG_MIDDLEWARE] || new Map();
+    if (!temp.has(key)) {
+        temp.set(key, new Set());
+    }
+    temp.get(key).add(deal) && (target[TAG_MIDDLEWARE] = temp);
 }

@@ -1,24 +1,25 @@
-import {Swagger, DEFAULT_SWAGGER} from "./swagger";
-import {TAG_CONTROLLER} from "./decorators/controller";
-import {TAG_METHOD} from "./decorators/method";
-import {TAG_MIDDLE_METHOD, TAG_MIDDLE_GLOBAL} from "./utils/index";
-import {TAG_DEFINITION} from "./decorators/definition";
 /**
  * Created by iZhui on 2017/5/13.
  */
+
+import {Swagger, DEFAULT_SWAGGER} from "./swagger";
+import {TAG_CONTROLLER} from "./decorators/controller";
+import {TAG_METHOD} from "./decorators/method";
+import {TAG_MIDDLE_METHOD, TAG_MIDDLE_GLOBAL, TAG_MIDDLEWARE} from "./utils/index";
+import {TAG_DEFINITION} from "./decorators/definition";
+import * as KoaRouter from 'koa-router';
 
 export class Router {
 
     swagger: Swagger = DEFAULT_SWAGGER;
 
-    constructor() {
-
-    }
+    router: KoaRouter = new KoaRouter();
 
     loadController(Controller: any) {
         if (Controller[TAG_CONTROLLER]) {
             const controller = new Controller();
             const middleMethod = controller[TAG_MIDDLE_METHOD];
+            const middleWares = controller[TAG_MIDDLEWARE] || new Set();
             controller[TAG_METHOD].forEach((methods, path) => {
                 let temp = {};
                 methods.forEach((key, method) => {
@@ -29,7 +30,8 @@ export class Router {
                             deal(router, this.swagger);
                         });
                     }
-                    temp[method.toLowerCase()] = router;
+                    temp[method] = router;
+                    !!this.router[method] && this.router[method](path, controller[key].bind(controller), ...middleWares.get(key));
                 });
                 this.swagger.paths[path] = temp;
             })
@@ -45,6 +47,10 @@ export class Router {
                 });
             }
         }
+    }
+
+    getRouter(): KoaRouter {
+        return this.router;
     }
 
 }

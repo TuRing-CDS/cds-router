@@ -4,7 +4,7 @@
 
 import * as joi from 'joi';
 import {Schema} from "joi";
-import {registMethod} from "../utils/index";
+import {registMethod, registMiddleware} from "../utils/index";
 
 /**
  * ENUM_PARAM_IN
@@ -70,13 +70,20 @@ export function param(name?: string, param?: Param): MethodDecorator {
                 }
                 return joi.validate(input, schema);
             }) && (target[TAG_CHECK] = checks);
+            registMethod(target, key, (router) => {
+                let parameters = router.parameters || [];
+                parameters.push(Object.assign({
+                    in: ENUM_PARAM_IN[param.in],
+                    name
+                }, {})) && (router.parameters = parameters);
+            });
+            registMiddleware(target, key, (ctx, next) => {
+                const {error, value} = target[TAG_CHECK].get(key)(Object.assign(ctx.params, ctx.req.body, ctx.req.query));
+                if (error) return next(error);
+                Object.assign(ctx, value);
+            });
         }
 
-        registMethod(target, key, (router) => {
-            let parameters = router.parameters || [];
-            // joi-to-swagger
-            parameters.push(Object.assign({in: ENUM_PARAM_IN[param.in], name}, {})) && (router.parameters = parameters);
-        });
 
         params.get(key).set(name, param) && (target[TAG_PARAM] = params);
     }
