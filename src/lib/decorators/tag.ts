@@ -1,4 +1,4 @@
-import {regist} from "../utils/index";
+import {registMethod} from "../utils/index";
 /**
  * Created by iZhui on 2017/5/13.
  */
@@ -16,10 +16,10 @@ export function tag(tag: string): MethodDecorator {
         if (!tags.has(key)) {
             tags.set(key, new Set());
         }
-        regist(target, key, (router) => {
+        registMethod(target, key, (router) => {
             let tags = router.tags || [];
             if (-1 == tags.indexOf(tag)) {
-                tags.push(tag) && (router[tag] = tags);
+                tags.push(tag) && (router.tags = tags);
             }
         });
         tags.get(key).add(tag) && (target[TAG_TAG] = tags);

@@ -1,3 +1,4 @@
+import {registGlobal} from "../utils/index";
 /**
  * Created by iZhui on 2017/5/12.
  */
@@ -23,6 +24,12 @@ export function definition(name?: string): ClassDecorator {
         let keys = {};
         keys = Object.assign({}, definition);
         const schema = object().keys(keys);
+        registGlobal(Definition, (swagger) => {
+            if (!swagger.definitions) {
+                swagger.definitions = {};
+            }
+            swagger.definitions[name] = new Definition();
+        });
         Definition[TAG_JOI_VALIDATE] = (input: Object) => {
             return validate(input, schema);
         }

@@ -1,7 +1,7 @@
 import {validate} from "joi";
 import {TAG_DEFINITION, definition} from "./definition";
 import {string} from "joi";
-import {regist} from "../utils/index";
+import {registMethod} from "../utils/index";
 /**
  * Created by iZhui on 2017/5/13.
  */
@@ -28,7 +28,7 @@ export function response(code: Number, response?: any): MethodDecorator {
         if (!checks.has(key)) {
             checks.set(key, new Map());
         }
-        response && regist(target, key, (router) => {
+        response && registMethod(target, key, (router) => {
             let responses = router.responses || {};
             if (response[TAG_DEFINITION]) {
                 responses = new response();

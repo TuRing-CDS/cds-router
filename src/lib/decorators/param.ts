@@ -4,7 +4,7 @@
 
 import * as joi from 'joi';
 import {Schema} from "joi";
-import {regist} from "../utils/index";
+import {registMethod} from "../utils/index";
 
 /**
  * ENUM_PARAM_IN
@@ -72,7 +72,7 @@ export function param(name?: string, param?: Param): MethodDecorator {
             }) && (target[TAG_CHECK] = checks);
         }
 
-        regist(target, key, (router) => {
+        registMethod(target, key, (router) => {
             let parameters = router.parameters || [];
             // joi-to-swagger
             parameters.push(Object.assign({in: ENUM_PARAM_IN[param.in], name}, {})) && (router.parameters = parameters);
