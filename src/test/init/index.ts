@@ -12,7 +12,7 @@ import {string} from "joi";
 import {tag} from "../../lib/decorators/tag";
 import {summary} from "../../lib/decorators/summary";
 import {response} from "../../lib/decorators/response";
-import {detail} from "../../lib/decorators/detail";
+import {description} from "../../lib/decorators/description";
 import {number} from "joi";
 
 @definition('User')
@@ -44,9 +44,9 @@ export class UserController extends BaseController {
     @tag('User')
     @tag('Login')
     @summary("This's summary")
-    @detail("This's detail")
-    @response(200, {type: 'object', $ref: UserSchema})
-    @response(404)
+    @description("This's detail")
+    @response(200, '成功', {type: 'object', $ref: UserSchema})
+    @response(404, '失败')
     async index(ctx) {
         if ('cavacn' === ctx.query.userName) {
             ctx.body = 'dagexxx';

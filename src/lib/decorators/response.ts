@@ -48,7 +48,7 @@ export function toJoi() {
  * @param response
  * @returns {(target:any, key:string)=>undefined}
  */
-export function response(code: Number, response?: ISchema): MethodDecorator {
+export function response(code: Number,description:string, response?: ISchema): MethodDecorator {
     return function (target: any, key: string) {
         const responses: Map<string,Map<Number,ISchema>> = target[TAG_RESPONSE] || new Map();
         const checks: Map<string,Map<Number,Function>> = target[TAG_RESPONSE_CHECK] || new Map();
@@ -71,7 +71,7 @@ export function response(code: Number, response?: ISchema): MethodDecorator {
         }
         response && registMethod(target, key, (router) => {
             let responses = router.responses || {};
-            responses[code.toString()] = Object.assign({}, {schema: toJSON.bind(response)()});
+            responses[code.toString()] = Object.assign({ description: description}, {schema: toJSON.bind(response)()});
             router.responses = responses;
         });
         responses.get(key).set(code, response) && ( target[TAG_RESPONSE] = responses);
