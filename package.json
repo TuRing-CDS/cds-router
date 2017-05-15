@@ -20,6 +20,7 @@
     "@types/koa": "^2.0.39",
     "@types/koa-router": "^7.0.22",
     "@types/node": "^7.0.18",
+    "@types/supertest": "^2.0.0",
     "debug": "^2.6.6",
     "joi": "^10.4.2",
     "koa-router": "^7.1.1"
@@ -29,6 +30,7 @@
     "@types/mocha": "^2.2.41",
     "chai": "^3.5.0",
     "mocha": "^3.3.0",
+    "supertest": "^3.0.0",
     "ts-node": "^3.0.4",
     "typescript": "^2.3.2",
     "typings": "^2.1.1"

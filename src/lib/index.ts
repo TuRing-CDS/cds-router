@@ -19,7 +19,7 @@ export class Router {
         if (Controller[TAG_CONTROLLER]) {
             const controller = new Controller();
             const middleMethod = controller[TAG_MIDDLE_METHOD];
-            const middleWares = controller[TAG_MIDDLEWARE] || new Set();
+            const middleWares = controller[TAG_MIDDLEWARE] || new Map();
             controller[TAG_METHOD].forEach((methods, path) => {
                 let temp = {};
                 methods.forEach((key, method) => {
@@ -31,7 +31,8 @@ export class Router {
                         });
                     }
                     temp[method] = router;
-                    !!this.router[method] && this.router[method](path, controller[key].bind(controller), ...middleWares.get(key));
+                    !!this.router[method] && this.router[method](Controller[TAG_CONTROLLER] + path,
+                        ...(middleWares.has(key) ? middleWares.get(key) : new Set()), controller[key]);
                 });
                 this.swagger.paths[path] = temp;
             })
@@ -51,6 +52,10 @@ export class Router {
 
     getRouter(): KoaRouter {
         return this.router;
+    }
+
+    getSwagger(){
+        return this.swagger;
     }
 
 }

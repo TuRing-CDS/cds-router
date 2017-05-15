@@ -16,9 +16,16 @@ describe('Param', () => {
         expect(userController[TAG_PARAM].get('index').get('userName')).to.not.eq(null)
     });
     it('UserController index.method\'s param [userName] required', () => {
-        expect(userController[TAG_CHECK].get('index')({userPass: 'ceg'}).error.message).to.eq('child "userName" fails because ["userName" is required]')
+        expect(userController[TAG_CHECK].get('index')({
+            query: {userPass: 'ceg'}
+        }).error.message).to.eq('child "query" fails because [child "userName" fails because ["userName" is required]]')
     });
     it('UserController index.method\'s param is validate', () => {
-        expect(userController[TAG_CHECK].get('index')({userName: 'cavacn', userPass: 'gehajnjf'}).error).to.eq(null);
+        expect(userController[TAG_CHECK].get('index')({
+            query: {
+                userName: 'cavacn',
+                userPass: 'gehajnjf'
+            }
+        }).error).to.eq(null);
     });
 });

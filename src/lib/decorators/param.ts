@@ -64,9 +64,9 @@ export function param(name?: string, param?: Param): MethodDecorator {
         if (!checks.has(key)) {
             checks.set(key, (input) => {
                 let p = target[TAG_PARAM].get(key);
-                let schema = {};
+                let schema = {path: {}, headers: {}, body: {}, query: {}};
                 for (let [k, v] of p) {
-                    schema[k] = v.schema;
+                    schema[ENUM_PARAM_IN[v.in]][k] = v.schema;
                 }
                 return joi.validate(input, schema);
             }) && (target[TAG_CHECK] = checks);
@@ -77,13 +77,19 @@ export function param(name?: string, param?: Param): MethodDecorator {
                     name
                 }, {})) && (router.parameters = parameters);
             });
-            registMiddleware(target, key, (ctx, next) => {
-                const {error, value} = target[TAG_CHECK].get(key)(Object.assign(ctx.params, ctx.req.body, ctx.req.query));
+            registMiddleware(target, key, async(ctx, next) => {
+                const {error, value} = target[TAG_CHECK].get(key)({
+                    path: ctx.params,
+                    body: ctx.req.body,
+                    query: ctx.query
+                });
                 if (error) return next(error);
-                Object.assign(ctx, value);
+                ctx.req.body = value.body;
+                ctx.query = value.query;
+                ctx.params = value.path;
+                return next();
             });
         }
-
 
         params.get(key).set(name, param) && (target[TAG_PARAM] = params);
     }

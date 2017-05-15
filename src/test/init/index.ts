@@ -13,6 +13,7 @@ import {tag} from "../../lib/decorators/tag";
 import {summary} from "../../lib/decorators/summary";
 import {response} from "../../lib/decorators/response";
 import {detail} from "../../lib/decorators/detail";
+import {number} from "joi";
 
 @definition('User')
 export class UserSchema {
@@ -28,25 +29,34 @@ export class BaseController {
     @get('/')
     @post('/')
     @del('/')
-    index() {
-
+    index(ctx) {
+        ctx.body = '';
     }
 }
 
 @controller('/user')
 export class UserController extends BaseController {
-    @get('/')
+    @get('/:userId')
     @post('/')
+    @param('userId', {in: ENUM_PARAM_IN.path, description: '用户ID', schema: number().required()})
     @param('userName', {in: ENUM_PARAM_IN.query, description: '用户名', schema: string().required()})
     @param('userPass', {in: ENUM_PARAM_IN.query, description: '密码', schema: string().required()})
     @tag('User')
     @tag('Login')
     @summary("This's summary")
     @detail("This's detail")
-    @response(200, UserSchema)
+    @response(200, {type: 'object', $ref: UserSchema})
     @response(404)
-    index() {
-
+    async index(ctx) {
+        if ('cavacn' === ctx.query.userName) {
+            ctx.body = 'dagexxx';
+        } else {
+            ctx.body = {
+                userName: ctx.query.userName,
+                userPass: ctx.query.userPass,
+                userAge: '290'
+            }
+        }
     }
 }
 
