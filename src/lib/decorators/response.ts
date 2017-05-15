@@ -23,9 +23,9 @@ export function toJSON() {
         ref = `#definitions/${this.$ref[TAG_DEFINITION]}`;
     }
     return {
-        type: this.type,
+        type: this.type == 'object' ? undefined : this.type,
         $ref: ref,
-        items: this.items ? toJSON.bind(this.items)() : null
+        items: this.items ? toJSON.bind(this.items)() : undefined
     }
 }
 
@@ -48,7 +48,7 @@ export function toJoi() {
  * @param response
  * @returns {(target:any, key:string)=>undefined}
  */
-export function response(code: Number,description:string, response?: ISchema): MethodDecorator {
+export function response(code: Number, description: string, response?: ISchema): MethodDecorator {
     return function (target: any, key: string) {
         const responses: Map<string,Map<Number,ISchema>> = target[TAG_RESPONSE] || new Map();
         const checks: Map<string,Map<Number,Function>> = target[TAG_RESPONSE_CHECK] || new Map();
@@ -71,7 +71,7 @@ export function response(code: Number,description:string, response?: ISchema): M
         }
         response && registMethod(target, key, (router) => {
             let responses = router.responses || {};
-            responses[code.toString()] = Object.assign({ description: description}, {schema: toJSON.bind(response)()});
+            responses[code.toString()] = Object.assign({description: description}, {schema: toJSON.bind(response)()});
             router.responses = responses;
         });
         responses.get(key).set(code, response) && ( target[TAG_RESPONSE] = responses);
