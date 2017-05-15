@@ -8,6 +8,7 @@ import * as koa from 'koa';
 import 'mocha';
 import {Router} from "../lib/index";
 import * as supertest from 'supertest';
+import * as fs from 'fs';
 
 describe('Router', () => {
     const router = new Router();
@@ -20,7 +21,7 @@ describe('Router', () => {
 
     app.use(router.getRouter().allowedMethods());
 
-    console.log(JSON.stringify(router.getSwagger()));
+    fs.writeFileSync('./swagger.json', JSON.stringify(router.getSwagger()));
 
     it('GET /v3/api success', (done) => {
         supertest(app.callback())
@@ -77,7 +78,7 @@ describe('Router', () => {
         supertest(app.callback())
             .get('/v3/api/user/10000?userName=cavacn2&userPass=xxxgeljg')
             .expect(200)
-            .expect({"userName":"CAVACN2","userPass":"xxxgeljg","userAge":290})
+            .expect({"userName": "CAVACN2", "userPass": "xxxgeljg", "userAge": 290})
             .end((err) => {
                 if (err) throw done(err);
                 done();

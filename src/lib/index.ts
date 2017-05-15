@@ -30,9 +30,12 @@ export class Router {
                             deal(router, this.swagger);
                         });
                     }
-                    temp[method] = router;
+                    if (!router.responses) {
+                        router.responses = {200: {}};
+                    }
                     !!this.router[method] && this.router[method](Controller[TAG_CONTROLLER] + path,
                         ...(middleWares.has(key) ? middleWares.get(key) : new Set()), controller[key]);
+                    temp[method == 'del' ? 'delete' : method] = router;
                 });
                 this.swagger.paths[path] = temp;
             })
@@ -54,7 +57,7 @@ export class Router {
         return this.router;
     }
 
-    getSwagger(){
+    getSwagger() {
         return this.swagger;
     }
 

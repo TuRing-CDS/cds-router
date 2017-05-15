@@ -9,6 +9,8 @@ export const TAG_JOI_VALIDATE = Symbol('JoiValidate');
 
 import {validate, object} from 'joi';
 
+import * as j2s from 'joi-to-swagger';
+
 /**
  * Definition
  * @param name
@@ -28,7 +30,7 @@ export function definition(name?: string): ClassDecorator {
             if (!swagger.definitions) {
                 swagger.definitions = {};
             }
-            swagger.definitions[name] = new Definition();
+            swagger.definitions[name] = j2s(new Definition()).swagger;
         });
         Definition[TAG_JOI_VALIDATE] = (input: Object) => {
             return validate(input, schema);

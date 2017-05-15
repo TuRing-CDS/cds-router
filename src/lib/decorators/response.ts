@@ -71,12 +71,8 @@ export function response(code: Number, response?: ISchema): MethodDecorator {
         }
         response && registMethod(target, key, (router) => {
             let responses = router.responses || {};
-            if (response[TAG_DEFINITION]) {
-                responses = toJSON.bind(response)();
-
-            }
-            // joi-to-swagger
-            responses[code.toString()] = Object.assign({}, {schema: response});
+            responses[code.toString()] = Object.assign({}, {schema: toJSON.bind(response)()});
+            router.responses = responses;
         });
         responses.get(key).set(code, response) && ( target[TAG_RESPONSE] = responses);
         checks.get(key).set(code, (input) => {

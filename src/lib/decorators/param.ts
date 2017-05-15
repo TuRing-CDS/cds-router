@@ -5,6 +5,7 @@
 import * as joi from 'joi';
 import {Schema} from "joi";
 import {registMethod, registMiddleware} from "../utils/index";
+import * as j2s from 'joi-to-swagger';
 
 /**
  * ENUM_PARAM_IN
@@ -75,7 +76,7 @@ export function param(name?: string, param?: Param): MethodDecorator {
                 parameters.push(Object.assign({
                     in: ENUM_PARAM_IN[param.in],
                     name
-                }, {})) && (router.parameters = parameters);
+                }, j2s(param.schema).swagger)) && (router.parameters = parameters);
             });
             registMiddleware(target, key, async(ctx, next) => {
                 const {error, value} = target[TAG_CHECK].get(key)({

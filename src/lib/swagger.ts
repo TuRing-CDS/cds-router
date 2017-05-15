@@ -29,10 +29,11 @@ export interface tag {
  * Swagger
  */
 export class Swagger {
+    swagger: string;
     info: Info;
     host?: string;
     basePath?: string;
-    tags?: tag[];
+    tags: tag[];
     schemes: string[];
     paths: any;
     securityDefinitions?: any;
@@ -45,11 +46,13 @@ export class Swagger {
 }
 
 export const DEFAULT_SWAGGER: Swagger = {
+    swagger: "2.0",
     info: {
         title: 'CDS-Router',
         version: '1.0.0'
     },
     schemes: ['http'],
+    tags: [],
     paths: {},
     definitions: {}
 };

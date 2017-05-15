@@ -16,11 +16,15 @@ export function tag(tag: string): MethodDecorator {
         if (!tags.has(key)) {
             tags.set(key, new Set());
         }
-        registMethod(target, key, (router) => {
+        registMethod(target, key, (router, swagger) => {
             let tags = router.tags || [];
             if (-1 == tags.indexOf(tag)) {
                 tags.push(tag) && (router.tags = tags);
             }
+            if (!swagger.tags) {
+                swagger.tags = [];
+            }
+            swagger.tags.map((x) => x.name).indexOf(tag) == -1 && swagger.tags.push({name: tag});
         });
         tags.get(key).add(tag) && (target[TAG_TAG] = tags);
     }
