@@ -16,7 +16,7 @@ export interface Info {
     }
 }
 
-export interface tag {
+export interface Tag {
     name: string;
     description: string;
     externalDocs?: {
@@ -33,7 +33,7 @@ export class Swagger {
     info: Info;
     host?: string;
     basePath?: string;
-    tags: tag[];
+    tags: Tag[];
     schemes: string[];
     paths: any;
     securityDefinitions?: any;
