@@ -1,40 +1,32 @@
 {
   "name": "cds-router",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
+  "description": "cds,router",
+  "main": "dist/lib/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha -r ./node_modules/ts-node/register src/test/**/*.test.ts"
+    "test": "./node_modules/.bin/jest --ci --coverage --no-cache"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/TuRing-CDS/cds-router.git"
-  },
+  "repository": "git+https://github.com/TuRing-CDS/cds-router.git",
   "author": "iamee",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/TuRing-CDS/cds-router/issues"
   },
   "homepage": "https://github.com/TuRing-CDS/cds-router#readme",
-  "dependencies": {
-    "@types/koa": "^2.0.39",
-    "@types/koa-router": "^7.0.22",
-    "@types/node": "^7.0.18",
-    "debug": "^2.6.6",
-    "joi": "^10.4.2",
-    "joi-to-swagger": "^1.1.0",
-    "koa-router": "^7.1.1"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@types/supertest": "^2.0.0",
-    "@types/chai": "^3.5.2",
-    "@types/mocha": "^2.2.41",
-    "chai": "^3.5.0",
-    "koa": "^2.2.0",
-    "mocha": "^3.3.0",
-    "supertest": "^3.0.0",
-    "ts-node": "^3.0.4",
-    "typescript": "^2.3.2",
-    "typings": "^2.1.1"
+    "jest": "^20.0.1",
+    "ts-jest": "^20.0.3"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/src/test/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
   }
 }
