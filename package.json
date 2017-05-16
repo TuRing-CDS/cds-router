@@ -13,8 +13,12 @@
     "url": "https://github.com/TuRing-CDS/cds-router/issues"
   },
   "homepage": "https://github.com/TuRing-CDS/cds-router#readme",
-  "dependencies": {},
+  "dependencies": {
+    "joi": "^10.4.2"
+  },
   "devDependencies": {
+    "@types/jest": "^19.2.3",
+    "@types/joi": "^10.3.2",
     "jest": "^20.0.1",
     "ts-jest": "^20.0.3"
   },
@@ -22,7 +26,8 @@
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
-    "testRegex": "(/src/test/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+
+    "testRegex": "(/src/test/.*|\\.test)\\.(ts|tsx|js)$",
     "moduleFileExtensions": [
       "ts",
       "tsx",

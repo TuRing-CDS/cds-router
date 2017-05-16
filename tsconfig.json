@@ -3,8 +3,6 @@
         "module": "commonjs",
         "target": "es6",
         "noImplicitAny": false,
-        "sourceMap": true,
-        "sourceRoot": "./src",
         "rootDir": "./src",
         "outDir": "./dist",
         "watch": true,
