@@ -1,8 +1,9 @@
 /**
  * Created by Z on 2017-05-17.
  */
-import {ISchema, toJoi} from "./ischema";
+import {ISchema, toJoi, toSwagger} from "./ischema";
 import * as joi from 'joi';
+import {registMethod} from "./utils/index";
 
 export const TAG_RESPONSE = Symbol('Response');
 
@@ -24,6 +25,12 @@ export function response(code: number, schema?: ISchema|joi.Schema): MethodDecor
         if (!RESPONSES.get(target.constructor).has(key)) {
             RESPONSES.get(target.constructor).set(key, new Map());
         }
+        registMethod(target, key, (router) => {
+            if (!router.responses) {
+                router.responses = {};
+            }
+            router.responses[code] = toSwagger(schema);
+        });
         RESPONSES.get(target.constructor).get(key).set(code, schema);
         target[TAG_RESPONSE] = target.constructor[TAG_RESPONSE] = RESPONSES.get(target.constructor);
     }

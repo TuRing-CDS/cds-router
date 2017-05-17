@@ -1,3 +1,4 @@
+import {registMethod} from "./utils/index";
 /**
  * Created by Z on 2017-05-17.
  */
@@ -12,6 +13,9 @@ export function summary(summary: string): MethodDecorator {
             SUMMARIES.set(target.constructor, new Map());
         }
         SUMMARIES.get(target.constructor).set(key, summary);
+        registMethod(target, key, (router) => {
+            router.summary = summary;
+        });
         target[TAG_SUMMARY] = target.constructor[TAG_SUMMARY] = SUMMARIES.get(target.constructor);
     }
 }
