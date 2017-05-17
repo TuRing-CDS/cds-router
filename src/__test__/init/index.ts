@@ -10,6 +10,7 @@ import * as joi from 'joi';
 import {definition} from "../../lib/definition";
 import {summary} from "../../lib/summary";
 import {response} from "../../lib/response";
+import {description} from "../../lib/description";
 
 @definition('User', '用户实体')
 export class UserSchema {
@@ -24,6 +25,7 @@ export class BaseController {
     @parameter('version', joi.string().description('版本'))
     @summary('BaseController[index]')
     @response(200)
+    @description('首页')
     index() {
 
     }
@@ -51,6 +53,7 @@ export class UserController extends BaseController {
 
     @del('/{uid}')
     @parameter('uid', joi.string().required().description('用户ID'), ENUM_PARAM_IN.path)
+    @description('删除用户')
     doDelete() {
 
     }
