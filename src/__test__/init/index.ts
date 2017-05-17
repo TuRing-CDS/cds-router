@@ -8,6 +8,7 @@ import {method, get, post, del, put} from '../../lib/method';
 import {parameter, ENUM_PARAM_IN} from "../../lib/parameter";
 import * as joi from 'joi';
 import {definition} from "../../lib/definition";
+import {summary} from "../../lib/summary";
 
 @definition('User', '用户实体')
 export class UserSchema {
@@ -20,6 +21,7 @@ export class BaseController {
 
     @get('/')
     @parameter('version', joi.string().description('版本'))
+    @summary('BaseController[index]')
     index() {
 
     }
@@ -37,6 +39,7 @@ export class UserController extends BaseController {
 
     @post('/')
     @parameter('user', {$ref: UserSchema}, ENUM_PARAM_IN.body)
+    @summary('UserController[doPost]')
     doPost() {
 
     }
