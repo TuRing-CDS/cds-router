@@ -5,7 +5,7 @@ import {BaseController, UserController} from './init';
 import 'jest';
 import {TAG_SUMMARY} from "../lib/summary";
 
-describe('Parameter', () => {
+describe('Summary', () => {
     it(` BaseController's index summary should be equal 'BaseController[index]'`, () => {
 
         expect(BaseController[TAG_SUMMARY].get('index')).toBe('BaseController[index]');

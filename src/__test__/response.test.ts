@@ -5,7 +5,7 @@ import {BaseController, UserController} from './init';
 import 'jest';
 import {TAG_RESPONSE} from "../lib/response";
 
-describe('Parameter', () => {
+describe('Response', () => {
 
     it(` BaseController's index have [ 200 ] response`,()=>{
 

@@ -2,7 +2,7 @@
  * Created by Z on 2017-05-17.
  */
 
-import {TAG_DEFINITION_NAME, TAG_DEFINITION_DETAIL} from "./definition";
+import {TAG_DEFINITION_NAME, TAG_DEFINITION_DESCRIPTION} from "./definition";
 
 import * as joi from 'joi';
 
@@ -33,8 +33,8 @@ export function toJoi(iSchema: ISchema): joi.Schema {
     if (joi[type]) {
         schema = joi[type]();
     }
-    if (Ref[TAG_DEFINITION_DETAIL]) {
-        schema = schema.description(Ref[TAG_DEFINITION_DETAIL]);
+    if (Ref[TAG_DEFINITION_DESCRIPTION]) {
+        schema = schema.description(Ref[TAG_DEFINITION_DESCRIPTION]);
     }
     switch (type) {
         case 'object':

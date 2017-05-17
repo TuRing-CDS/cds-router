@@ -3,7 +3,7 @@
  */
 
 export const TAG_DEFINITION_NAME = Symbol('DefinitionName');
-export const TAG_DEFINITION_DETAIL = Symbol('DefinitionDetail');
+export const TAG_DEFINITION_DESCRIPTION = Symbol('DefinitionDescription');
 
 export function definition(name?: string, detail?: string): ClassDecorator {
     return function (Definition: Function) {
@@ -11,6 +11,6 @@ export function definition(name?: string, detail?: string): ClassDecorator {
             name = Definition.name;
         }
         Definition[TAG_DEFINITION_NAME] = name;
-        Definition[TAG_DEFINITION_DETAIL] = detail || name;
+        Definition[TAG_DEFINITION_DESCRIPTION] = detail || name;
     }
 }
