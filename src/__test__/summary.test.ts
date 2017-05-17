@@ -23,4 +23,11 @@ describe('Parameter', () => {
         expect(UserController[TAG_SUMMARY].get('doPost')).toBe('UserController[doPost]');
 
     });
+
+    it(` UserController's doPut summary should be equal undefined`, () => {
+
+        expect(UserController[TAG_SUMMARY].get('doPut')).toBe(undefined);
+
+    });
+
 });
