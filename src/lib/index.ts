@@ -35,6 +35,18 @@ export interface ISWagger {
     definitions: {};
 }
 
+export interface IPath {
+    tags: string[];
+    summary: string;
+    description: string;
+    operationId: string;
+    consumes: string[];
+    produces: string[];
+    parameters: any[];
+    responses: any;
+    security: any[];
+}
+
 export const DEFAULT_SWAGGER: ISWagger = {
     swagger: '2.0',
     info: {
@@ -47,6 +59,18 @@ export const DEFAULT_SWAGGER: ISWagger = {
     paths: {},
     definitions: {}
 };
+
+export const DEFAULT_PATH: IPath = {
+    tags: [],
+    summary: '',
+    description: '',
+    operationId: undefined,
+    consumes: ['application/json'],
+    produces: ['application/json'],
+    parameters: [],
+    responses: {},
+    security: []
+}
 
 export class CDSRouter {
 
@@ -65,9 +89,8 @@ export class CDSRouter {
                 const router = {};
                 const fullPath = (Controller[TAG_CONTROLLER] + path).replace(this.swagger.basePath, '');
                 const methods = allMethods.get(path);
-
                 for (let [k, v] of methods) {
-                    router[k] = {};
+                    router[k] = Object.assign({}, DEFAULT_PATH);
                     (middleMethods.get(v.key) || []).forEach((deal) => {
                         deal(router[k], this.swagger);
                     });

@@ -6,28 +6,36 @@ import {TAG_DEFINITION_NAME, TAG_DEFINITION_DESCRIPTION} from "./definition";
 
 import * as joi from 'joi';
 
+import * as j2s from 'joi-to-swagger';
+
 export interface ISchema {
     type?: string;
     items?: ISchema;
     $ref?: Function;
 }
 
-export function toSwagger(iSchema: ISchema) {
+export function toSwagger(iSchema: ISchema|joi.Schema): any {
+    if (iSchema['isJoi']) {
+        return j2s(iSchema).swagger;
+    }
     let items = undefined;
-    let $ref: any = iSchema.$ref;
-    if (iSchema.items) {
-        items = toSwagger(iSchema.items);
+    let $ref: any = iSchema['$ref'];
+    if (iSchema['items']) {
+        items = toSwagger(iSchema['items']);
     }
     if ($ref && $ref[TAG_DEFINITION_NAME]) {
         $ref = '#definitions/' + $ref[TAG_DEFINITION_NAME];
     }
-    return {items, type: iSchema.type, $ref}
+    return {items, type: iSchema['type'] || 'object', $ref}
 }
 
-export function toJoi(iSchema: ISchema): joi.Schema {
-    let type = iSchema.type || 'object';
+export function toJoi(iSchema: ISchema|joi.Schema): joi.Schema|ISchema {
+    if (iSchema['isJoi']) {
+        return iSchema;
+    }
+    let type = iSchema['type'] || 'object';
     let schema = null;
-    let Ref: any = iSchema.$ref || (iSchema.items && iSchema.items.$ref);
+    let Ref: any = iSchema['$ref'] || (iSchema['items'] && iSchema['items'].$ref);
     let ref = new Ref();
     let keys = Object.assign({}, ref);
     if (joi[type]) {

@@ -9,6 +9,9 @@ import {definition} from "../lib/definition";
 import {CDSRouter} from "../lib/index";
 import {summary} from "../lib/summary";
 import {response} from "../lib/response";
+import * as fs from 'fs';
+import {array} from "joi";
+import {string} from "joi";
 @controller('/v3/api')
 class BaseController {
 
@@ -23,7 +26,6 @@ class BaseController {
 @controller('/user')
 class UserController extends BaseController {
 
-    @get('/')
     @del('/:userId')
     index() {
 
@@ -47,9 +49,10 @@ class AdminController extends UserController {
 
     @post('/login')
     @parameter('name', joi.string().description('名字'))
-    @parameter('list', {type: 'array', items: {type: 'object', $ref: AdminSchema}}, ENUM_PARAM_IN.query)
+    @parameter('list', array().items(string()), ENUM_PARAM_IN.query)
     @summary('AdminController.index')
-    @response(200, {$ref: AdminSchema})
+    @response(200, '成功', {$ref: AdminSchema})
+    @response(202, '失败')
     index() {
 
     }
@@ -62,8 +65,7 @@ router.loadController(BaseController);
 router.loadController(UserController);
 router.loadController(AdminController);
 
-console.log(router.swagger.paths['/user/admin/login'].post.responses)
-
+fs.writeFileSync('./swagger.json', JSON.stringify(router.swagger));
 // console.log('BaseController', METHODS.get(BaseController));
 // console.log('BaseController', base[TAG_METHOD]);
 // console.log('BaseController', BaseController[TAG_METHOD]);
