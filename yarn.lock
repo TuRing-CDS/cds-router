@@ -1232,6 +1232,13 @@ jodid25519@^1.0.0:
   dependencies:
     jsbn "~0.1.0"
 
+joi-to-swagger@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/joi-to-swagger/-/joi-to-swagger-1.1.0.tgz#2783c987ca3cd0c166cd8427e49d1d5be6df7ead"
+  dependencies:
+    lodash.find "^4.0.0"
+    lodash.get "^4.0.2"
+
 joi@^10.4.2:
   version "10.4.2"
   resolved "https://registry.yarnpkg.com/joi/-/joi-10.4.2.tgz#bc934aed34f8d0d0c84365c8e52fb6178ceb926a"
@@ -1373,6 +1380,14 @@ locate-path@^2.0.0:
   dependencies:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
+
+lodash.find@^4.0.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/lodash.find/-/lodash.find-4.6.0.tgz#cb0704d47ab71789ffa0de8b97dd926fb88b13b1"
+
+lodash.get@^4.0.2:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
 
 lodash@^4.14.0, lodash@^4.2.0:
   version "4.17.4"
