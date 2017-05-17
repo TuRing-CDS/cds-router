@@ -9,6 +9,7 @@ import {parameter, ENUM_PARAM_IN} from "../../lib/parameter";
 import * as joi from 'joi';
 import {definition} from "../../lib/definition";
 import {summary} from "../../lib/summary";
+import {response} from "../../lib/response";
 
 @definition('User', '用户实体')
 export class UserSchema {
@@ -22,6 +23,7 @@ export class BaseController {
     @get('/')
     @parameter('version', joi.string().description('版本'))
     @summary('BaseController[index]')
+    @response(200)
     index() {
 
     }
@@ -33,6 +35,8 @@ export class BaseController {
 export class UserController extends BaseController {
     @get('/')
     @parameter('userName', joi.string().description('用户名'))
+    @response(200, {$ref: UserSchema})
+    @response(201)
     doGet() {
 
     }
@@ -40,6 +44,7 @@ export class UserController extends BaseController {
     @post('/')
     @parameter('user', {$ref: UserSchema}, ENUM_PARAM_IN.body)
     @summary('UserController[doPost]')
+    @response(303)
     doPost() {
 
     }
@@ -51,7 +56,7 @@ export class UserController extends BaseController {
     }
 
     @put('/')
-    @parameter('token',joi.string().description('token'),ENUM_PARAM_IN.header)
+    @parameter('token', joi.string().description('token'), ENUM_PARAM_IN.header)
     doPut() {
 
     }

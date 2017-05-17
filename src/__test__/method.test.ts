@@ -14,13 +14,13 @@ describe('Method', () => {
 
     });
 
-    it(`BaseController shoude be havn't [ POST /            ]`, () => {
+    it(`BaseController shoude be haven't [ POST /            ]`, () => {
 
         expect(BaseController[TAG_METHOD].get('/').get('post')).toBe(undefined);
 
     });
 
-    it(`BaseController should be havn't [ DELETE /{uid}     ]`, () => {
+    it(`BaseController should be haven't [ DELETE /{uid}     ]`, () => {
 
         expect(BaseController[TAG_METHOD].get('/{uid}')).toBe(undefined);
 
