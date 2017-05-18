@@ -42,6 +42,7 @@ export function parameter(name: string, schema?: joi.Schema, paramIn?: ENUM_PARA
                 description: name
             }, {required: paramIn == ENUM_PARAM_IN.path && true}, toSwagger(schema)));
         });
+
         PARAMETERS.get(target.constructor).get(key).set(name, {in: paramIn, schema: toJoi(schema)});
         target[TAG_PARAMETER] = target.constructor[TAG_PARAMETER] = PARAMETERS.get(target.constructor);
     }
