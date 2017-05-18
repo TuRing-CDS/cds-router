@@ -29,6 +29,12 @@ export function toSwagger(iSchema: ISchema|joi.Schema): any {
     return {items, type: iSchema['type'] || 'object', $ref}
 }
 
+export function toSchema(Definition) {
+    let key = {};
+    key = Object.assign(key, new Definition());
+    return j2s(joi.object().keys(key)).swagger;
+}
+
 export function toJoi(iSchema: ISchema|joi.Schema): joi.Schema|ISchema {
     if (iSchema['isJoi']) {
         return iSchema;

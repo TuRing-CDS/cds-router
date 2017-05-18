@@ -1,6 +1,7 @@
 import {TAG_CONTROLLER} from "./controller";
 import {TAG_METHOD} from "./method";
-import {TAG_MIDDLE_METHOD} from "./utils/index";
+import {TAG_MIDDLE_METHOD, TAG_GLOBAL_METHOD} from "./utils/index";
+import {TAG_DEFINITION_NAME} from "./definition";
 /**
  * Created by Z on 2017-05-17.
  */
@@ -97,6 +98,15 @@ export class CDSRouter {
                 }
                 this.swagger.paths[fullPath] = router;
             });
+        }
+    }
+
+    loadDefinition(Definition) {
+        if (Definition[TAG_DEFINITION_NAME]) {
+            const globalMethods = Definition[TAG_GLOBAL_METHOD] || [];
+            globalMethods.forEach((deal) => {
+                deal(this.swagger);
+            })
         }
     }
 

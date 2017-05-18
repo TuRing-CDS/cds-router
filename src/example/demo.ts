@@ -12,6 +12,7 @@ import {response} from "../lib/response";
 import * as fs from 'fs';
 import {array} from "joi";
 import {string} from "joi";
+import {UserSchema} from "../__test__/init/index";
 @controller('/v3/api')
 class BaseController {
 
@@ -61,6 +62,8 @@ class AdminController extends UserController {
 
 const router = new CDSRouter();
 
+router.loadDefinition(UserSchema);
+router.loadDefinition(AdminSchema);
 router.loadController(BaseController);
 router.loadController(UserController);
 router.loadController(AdminController);
