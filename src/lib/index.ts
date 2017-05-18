@@ -3,6 +3,7 @@ import {TAG_METHOD} from "./method";
 import {TAG_MIDDLE_METHOD, TAG_GLOBAL_METHOD} from "./utils/index";
 import {TAG_DEFINITION_NAME} from "./definition";
 import * as _ from 'lodash';
+import * as Router from 'koa-router';
 /**
  * Created by Z on 2017-05-17.
  */
@@ -69,13 +70,15 @@ export const DEFAULT_PATH: IPath = {
     operationId: undefined,
     consumes: ['application/json'],
     produces: ['application/json'],
-    responses: {'200':{description:'成功'}},
+    responses: {'200': {description: '成功'}},
     security: []
 }
 
 export class CDSRouter {
 
     swagger: ISWagger;
+
+    router: Router = new Router();
 
     constructor(swagger: ISWagger = DEFAULT_SWAGGER) {
         this.swagger = swagger;
@@ -89,7 +92,6 @@ export class CDSRouter {
             paths.forEach((path) => {
                 const temp = {};
                 const fullPath = (Controller[TAG_CONTROLLER] + path).replace(this.swagger.basePath, '');
-                // console.log('==>', fullPath, temp)
                 const methods = allMethods.get(path);
                 for (let [k, v] of methods) {
                     let router = _.cloneDeep(DEFAULT_PATH);
@@ -101,6 +103,9 @@ export class CDSRouter {
                         }
                     }
                     temp[k] = router;
+                    if (this.router[k]) {
+                        this.router[k](fullPath.replace(/{(\w+)}/g, ':$1'), v.handle);
+                    }
                 }
                 this.swagger.paths[fullPath] = temp;
             });
@@ -114,6 +119,10 @@ export class CDSRouter {
                 deal(this.swagger);
             })
         }
+    }
+
+    getRouter() {
+        return this.router;
     }
 
 }

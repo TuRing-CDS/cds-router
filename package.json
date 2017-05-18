@@ -16,9 +16,11 @@
   "dependencies": {
     "@types/jest": "^19.2.3",
     "@types/joi": "^10.3.2",
+    "@types/koa-router": "^7.0.22",
     "@types/lodash": "^4.14.64",
     "joi": "^10.4.2",
     "joi-to-swagger": "^1.1.0",
+    "koa-router": "^7.1.1",
     "lodash": "^4.17.4"
   },
   "devDependencies": {

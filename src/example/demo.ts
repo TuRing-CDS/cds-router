@@ -73,6 +73,8 @@ router.loadController(UserController);
 router.loadController(AdminController);
 
 fs.writeFileSync('./swagger.json', JSON.stringify(router.swagger));
+
+console.log(router.getRouter());
 // console.log('BaseController', METHODS.get(BaseController));
 // console.log('BaseController', base[TAG_METHOD]);
 // console.log('BaseController', BaseController[TAG_METHOD]);
