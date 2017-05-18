@@ -4,13 +4,14 @@
 
 import {controller} from '../../lib/controller';
 
-import {method, get, post, del, put} from '../../lib/method';
+import {get, post, del, put} from '../../lib/method';
 import {parameter, ENUM_PARAM_IN} from "../../lib/parameter";
 import * as joi from 'joi';
 import {definition} from "../../lib/definition";
 import {summary} from "../../lib/summary";
 import {response} from "../../lib/response";
 import {description} from "../../lib/description";
+import {tag} from "../../lib/tag";
 
 @definition('User', '用户实体')
 export class UserSchema {
@@ -39,12 +40,13 @@ export class UserController extends BaseController {
     @parameter('userName', joi.string().description('用户名'))
     @response(200, {$ref: UserSchema})
     @response(201)
+    @tag('User')
     doGet() {
 
     }
 
     @post('/')
-    @parameter('user', {$ref: UserSchema}, ENUM_PARAM_IN.body)
+    @parameter('user', joi.string().description('user'), ENUM_PARAM_IN.body)
     @summary('UserController[doPost]')
     @response(303)
     doPost() {

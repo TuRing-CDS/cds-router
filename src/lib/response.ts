@@ -9,9 +9,9 @@ export const TAG_RESPONSE = Symbol('Response');
 
 const RESPONSES: Map<Function,Map<string,Map<number,ISchema|joi.Schema>>> = new Map();
 
-export const DEFAULT_RESPONSE: joi.Schema = joi.string().default('success');
+export const DEFAULT_RESPONSE: joi.Schema = joi.string().default('');
 
-export function response(code: number, description: string, schema?: ISchema|joi.Schema): MethodDecorator {
+export function response(code: number, schema?: ISchema|joi.Schema): MethodDecorator {
     return function (target: any, key: string) {
         if (!schema) {
             schema = DEFAULT_RESPONSE;
@@ -26,7 +26,8 @@ export function response(code: number, description: string, schema?: ISchema|joi
             if (!router.responses) {
                 router.responses = {};
             }
-            router.responses[code] = Object.assign({description}, {schema: toSwagger(schema)});
+            schema = toSwagger(schema);
+            router.responses[code] = Object.assign({description: schema['description'] || ''}, {schema});
         });
         RESPONSES.get(target.constructor).get(key).set(code, toJoi(schema));
         target[TAG_RESPONSE] = target.constructor[TAG_RESPONSE] = RESPONSES.get(target.constructor);

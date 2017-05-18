@@ -31,9 +31,9 @@ describe('Parameter', () => {
 
     });
 
-    it(` UserController's doPost method [ parameter {user} ]'s description should be '用户实体'`, () => {
+    it(` UserController's doPost method [ parameter {user} ]'s description should be 'user'`, () => {
 
-        expect(UserController[TAG_PARAMETER].get('doPost').get('user').schema._description).toBe('用户实体');
+        expect(UserController[TAG_PARAMETER].get('doPost').get('user').schema._description).toBe('user');
 
     });
 
