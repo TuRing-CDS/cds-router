@@ -28,7 +28,8 @@ class BaseController {
 @controller('/user')
 class UserController extends BaseController {
 
-    @del('/:userId')
+    @del('/{userId}')
+    @parameter('userId', joi.string().description('用户ID'), ENUM_PARAM_IN.path)
     index() {
 
     }
@@ -40,7 +41,7 @@ class UserController extends BaseController {
 
 }
 
-@definition('Admin','管理实体')
+@definition('Admin', '管理实体')
 class AdminSchema {
     userName = joi.string().required().min(6).uppercase();
     userPass = joi.string();
@@ -54,7 +55,7 @@ class AdminController extends UserController {
     @parameter('list', array().items(string()), ENUM_PARAM_IN.query)
     @summary('AdminController.index')
     @response(200, {$ref: AdminSchema})
-    @response(202,joi.string().description('aaa'))
+    @response(202, joi.string().description('aaa'))
     @tag('Admin')
     @tag('User')
     index() {

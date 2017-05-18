@@ -22,7 +22,7 @@ export function response(code: number, schema?: ISchema|joi.Schema): MethodDecor
         if (!RESPONSES.get(target.constructor).has(key)) {
             RESPONSES.get(target.constructor).set(key, new Map());
         }
-        registMethod(target, key, (router) => {
+        registMethod(target, key, function fnResponse(router) {
             if (!router.responses) {
                 router.responses = {};
             }

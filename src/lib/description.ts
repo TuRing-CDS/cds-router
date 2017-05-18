@@ -12,7 +12,7 @@ export function description(description: string): MethodDecorator {
         if (!DESCRIPTIONS.has(target.constructor)) {
             DESCRIPTIONS.set(target.constructor, new Map());
         }
-        registMethod(target, key, (router) => {
+        registMethod(target, key, function fnDescription(router){
             router.description = description;
         });
         DESCRIPTIONS.get(target.constructor).set(key, description);

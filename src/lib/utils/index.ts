@@ -16,6 +16,7 @@ export function registMethod(target: any, key: string, deal: Function) {
         MIDDLE_METHODS.get(target.constructor).set(key, []);
     }
     MIDDLE_METHODS.get(target.constructor).get(key).push(deal);
+    // console.log(target.constructor.name,key,MIDDLE_METHODS.get(target.constructor).get(key));
     target[TAG_MIDDLE_METHOD] = target.constructor[TAG_MIDDLE_METHOD] = MIDDLE_METHODS.get(target.constructor);
 }
 

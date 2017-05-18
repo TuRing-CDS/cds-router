@@ -12,7 +12,7 @@ export function definition(name?: string, description?: string): ClassDecorator 
         if (!name) {
             name = Definition.name;
         }
-        registGlobal(Definition, (swagger) => {
+        registGlobal(Definition, function definition(swagger){
             swagger.definitions[name] = toSchema(Definition);
         });
         Definition[TAG_DEFINITION_NAME] = name;

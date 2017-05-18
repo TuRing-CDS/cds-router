@@ -32,7 +32,7 @@ export function parameter(name: string, schema?: joi.Schema, paramIn?: ENUM_PARA
         if (!PARAMETERS.get(target.constructor).has(key)) {
             PARAMETERS.get(target.constructor).set(key, new Map());
         }
-        registMethod(target, key, (router) => {
+        registMethod(target, key, function fnParameter(router) {
             if (!router.parameters) {
                 router.parameters = [];
             }
@@ -40,7 +40,7 @@ export function parameter(name: string, schema?: joi.Schema, paramIn?: ENUM_PARA
                 name,
                 in: ENUM_PARAM_IN[paramIn],
                 description: name
-            }, toSwagger(schema)));
+            }, {required: paramIn == ENUM_PARAM_IN.path && true}, toSwagger(schema)));
         });
         PARAMETERS.get(target.constructor).get(key).set(name, {in: paramIn, schema: toJoi(schema)});
         target[TAG_PARAMETER] = target.constructor[TAG_PARAMETER] = PARAMETERS.get(target.constructor);

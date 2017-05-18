@@ -2,6 +2,7 @@ import {TAG_CONTROLLER} from "./controller";
 import {TAG_METHOD} from "./method";
 import {TAG_MIDDLE_METHOD, TAG_GLOBAL_METHOD} from "./utils/index";
 import {TAG_DEFINITION_NAME} from "./definition";
+import * as _ from 'lodash';
 /**
  * Created by Z on 2017-05-17.
  */
@@ -43,7 +44,7 @@ export interface IPath {
     operationId: string;
     consumes: string[];
     produces: string[];
-    parameters: any[];
+    parameters?: any[];
     responses: any;
     security: any[];
 }
@@ -68,8 +69,7 @@ export const DEFAULT_PATH: IPath = {
     operationId: undefined,
     consumes: ['application/json'],
     produces: ['application/json'],
-    parameters: [],
-    responses: {},
+    responses: {'200':{description:'成功'}},
     security: []
 }
 
@@ -87,16 +87,22 @@ export class CDSRouter {
             const paths = [...allMethods.keys()];
             const middleMethods = Controller[TAG_MIDDLE_METHOD] || new Map();
             paths.forEach((path) => {
-                const router = {};
+                const temp = {};
                 const fullPath = (Controller[TAG_CONTROLLER] + path).replace(this.swagger.basePath, '');
+                // console.log('==>', fullPath, temp)
                 const methods = allMethods.get(path);
                 for (let [k, v] of methods) {
-                    router[k] = Object.assign({}, DEFAULT_PATH);
-                    (middleMethods.get(v.key) || []).forEach((deal) => {
-                        deal(router[k], this.swagger);
-                    });
+                    let router = _.cloneDeep(DEFAULT_PATH);
+                    const methods = middleMethods.get(v.key);
+                    if (methods) {
+                        for (let i = 0, len = methods.length; i < len; i++) {
+
+                            methods[i](router, this.swagger);
+                        }
+                    }
+                    temp[k] = router;
                 }
-                this.swagger.paths[fullPath] = router;
+                this.swagger.paths[fullPath] = temp;
             });
         }
     }

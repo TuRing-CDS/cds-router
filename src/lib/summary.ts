@@ -13,7 +13,7 @@ export function summary(summary: string): MethodDecorator {
             SUMMARIES.set(target.constructor, new Map());
         }
         SUMMARIES.get(target.constructor).set(key, summary);
-        registMethod(target, key, (router) => {
+        registMethod(target, key, function fnSummary(router) {
             router.summary = summary;
         });
         target[TAG_SUMMARY] = target.constructor[TAG_SUMMARY] = SUMMARIES.get(target.constructor);

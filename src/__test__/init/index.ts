@@ -66,3 +66,14 @@ export class UserController extends BaseController {
 
     }
 }
+
+@controller('/admin')
+export class AdminController extends UserController {
+
+    @del('/{adminId}')
+    @parameter('adminId', joi.string().required().description('管理员id'), ENUM_PARAM_IN.path)
+    doDelete() {
+
+    }
+
+}

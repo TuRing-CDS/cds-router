@@ -14,10 +14,12 @@
   },
   "homepage": "https://github.com/TuRing-CDS/cds-router#readme",
   "dependencies": {
-    "joi": "^10.4.2",
-    "@types/joi": "^10.3.2",
     "@types/jest": "^19.2.3",
-    "joi-to-swagger": "^1.1.0"
+    "@types/joi": "^10.3.2",
+    "@types/lodash": "^4.14.64",
+    "joi": "^10.4.2",
+    "joi-to-swagger": "^1.1.0",
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "jest": "^20.0.1",

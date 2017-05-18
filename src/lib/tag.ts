@@ -1,3 +1,4 @@
+import {registMethod} from "./utils/index";
 /**
  * Created by Z on 2017-05-18.
  */
@@ -14,6 +15,12 @@ export function tag(tag: string): MethodDecorator {
         if (!TAGS.get(target.constructor).has(key)) {
             TAGS.get(target.constructor).set(key, new Set());
         }
+        registMethod(target, key, function fnTag(router) {
+            if (!router.tags) {
+                router.tags = [];
+            }
+            router.tags.push(tag);
+        });
         TAGS.get(target.constructor).get(key).add(tag);
         target[TAG_TAG] = target.constructor[TAG_TAG] = TAGS.get(target.constructor);
     }
