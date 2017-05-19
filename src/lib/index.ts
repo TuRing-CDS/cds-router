@@ -8,6 +8,24 @@ import * as Router from 'koa-router';
  * Created by Z on 2017-05-17.
  */
 
+export * from './controller';
+
+export * from './definition';
+
+export * from './description';
+
+export * from './ischema';
+
+export * from './method';
+
+export * from './parameter';
+
+export * from './response';
+
+export * from './summary';
+
+export * from './tag';
+
 export interface ISWagger {
     swagger: string;
     info: {
