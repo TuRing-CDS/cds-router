@@ -14,6 +14,7 @@ import {array} from "joi";
 import {string} from "joi";
 import {UserSchema} from "../__test__/init/index";
 import {tag} from "../lib/tag";
+import * as koa from 'koa';
 @controller('/v3/api')
 class BaseController {
 
@@ -32,6 +33,18 @@ class UserController extends BaseController {
     @parameter('userId', joi.string().description('用户ID'), ENUM_PARAM_IN.path)
     index() {
 
+    }
+
+    @get('/')
+    doGet(ctx) {
+        ctx.body = Date.now();
+    }
+
+    @get('/{userId}')
+    @parameter('userId', joi.number().description('userId'), ENUM_PARAM_IN.path)
+    @response(200, {$ref: UserSchema})
+    getUser(ctx) {
+        ctx.body = {userName: ctx.params.userId.toString(), userPass: Date.now().toString()};
     }
 
     @post('/')
@@ -74,7 +87,7 @@ router.loadController(AdminController);
 
 fs.writeFileSync('./swagger.json', JSON.stringify(router.swagger));
 
-console.log(router.getRouter());
+// console.log(router.getRouter());
 // console.log('BaseController', METHODS.get(BaseController));
 // console.log('BaseController', base[TAG_METHOD]);
 // console.log('BaseController', BaseController[TAG_METHOD]);
@@ -84,3 +97,29 @@ console.log(router.getRouter());
 // console.log('AdminController', METHODS.get(AdminController));
 // console.log('AdminController', admin[TAG_METHOD]);
 // console.log('AdminController', AdminController[TAG_METHOD]);
+
+const app = new koa();
+
+app.use(async function (ctx, next) {
+    if (ctx.query && ctx.query.iou) {
+        ctx['isOld'] = true;
+        delete ctx.query.iou;
+    }
+    await next();
+});
+
+app.use(async function (ctx, next) {
+    await next();
+    if (ctx['isOld']) {
+        ctx.body = {status: ctx.status, body: ctx.body};
+        ctx.status = 200;
+        return;
+    }
+});
+
+app.use(router.getRouter().routes());
+
+app.use(router.getRouter().allowedMethods());
+
+
+app.listen(3002);

@@ -3,7 +3,7 @@
  */
 import {ISchema, toJoi, toSwagger} from "./ischema";
 import * as joi from 'joi';
-import {registMethod} from "./utils/index";
+import {registMethod, registMiddleware} from "./utils/index";
 
 export const TAG_PARAMETER = Symbol('Parameter');
 
@@ -41,6 +41,35 @@ export function parameter(name: string, schema?: joi.Schema, paramIn?: ENUM_PARA
                 in: ENUM_PARAM_IN[paramIn],
                 description: name
             }, {required: paramIn == ENUM_PARAM_IN.path && true}, toSwagger(schema)));
+        });
+
+        registMiddleware(target, key, async function fnParameter(ctx, next) {
+            let schemas = PARAMETERS.get(target.constructor).get(key);
+            let tempSchema = {params: {}, body: {}, query: {}};
+            for (let [name, schema] of schemas) {
+                switch (schema.in) {
+                    case ENUM_PARAM_IN.query:
+                        tempSchema.query[name] = schema.schema;
+                        break;
+                    case ENUM_PARAM_IN.path:
+                        tempSchema.params[name] = schema.schema;
+                        break;
+                    case ENUM_PARAM_IN.body:
+                        tempSchema.body[name] = schema.schema;
+                }
+            }
+            let {error, value} = joi.validate({
+                params: ctx.params,
+                body: ctx.req.body,
+                query: ctx.req.query
+            }, tempSchema);
+            if (error) {
+                return ctx.throw(400, JSON.stringify({type: 'request', message: error.message}));
+            }
+            ctx.params = value.params;
+            ctx.req.body = value.body;
+            ctx.req.query = value.query;
+            return await next();
         });
 
         PARAMETERS.get(target.constructor).get(key).set(name, {in: paramIn, schema: toJoi(schema)});

@@ -3,7 +3,7 @@
  */
 import {ISchema, toJoi, toSwagger} from "./ischema";
 import * as joi from 'joi';
-import {registMethod} from "./utils/index";
+import {registMethod, registMiddleware} from "./utils/index";
 
 export const TAG_RESPONSE = Symbol('Response');
 
@@ -29,6 +29,20 @@ export function response(code: number, schema?: ISchema|joi.Schema): MethodDecor
             schema = toSwagger(schema);
             router.responses[code] = Object.assign({description: schema['description'] || ''}, {schema});
         });
+
+        registMiddleware(target, key, async function fnResponse(ctx, next) {
+            await next();
+            if (RESPONSES.get(target.constructor).get(key).has(ctx.status)) {
+                let {error, value} =joi.validate(ctx.body, RESPONSES.get(target.constructor).get(key).get(ctx.status));
+                if (error) {
+                    ctx.body = {type: 'response', message: error.message};
+                    ctx.status = 400;
+                    return;
+                }
+                ctx.body = value;
+            }
+        });
+
         RESPONSES.get(target.constructor).get(key).set(code, toJoi(schema));
         target[TAG_RESPONSE] = target.constructor[TAG_RESPONSE] = RESPONSES.get(target.constructor);
     }
