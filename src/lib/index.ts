@@ -106,7 +106,7 @@ export class CDSRouter {
                     }
                     temp[k] = router;
                     if (this.router[k]) {
-                        this.router[k](fullPath.replace(/{(\w+)}/g, ':$1'), ...(wares.concat(v.handle)));
+                        this.router[k]((Controller[TAG_CONTROLLER] + path).replace(/{(\w+)}/g, ':$1'), ...(wares.concat(v.handle)));
                     }
                 }
                 this.swagger.paths[fullPath] = temp;
