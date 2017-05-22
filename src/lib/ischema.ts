@@ -20,12 +20,15 @@ export function toSwagger(iSchema: ISchema|joi.Schema): any {
     }
     let items = undefined;
     let $ref: any = iSchema['$ref'];
-    let description = $ref[TAG_DEFINITION_DESCRIPTION];
+    let description = undefined;
     if (iSchema['items']) {
         items = toSwagger(iSchema['items']);
+        $ref = items['$ref'];
     }
     if ($ref && $ref[TAG_DEFINITION_NAME]) {
+        console.log($ref[TAG_DEFINITION_DESCRIPTION]);
         $ref = '#definitions/' + $ref[TAG_DEFINITION_NAME];
+        description = $ref[TAG_DEFINITION_DESCRIPTION];
     }
     return {items, type: iSchema['type'] || 'object', $ref, description}
 }

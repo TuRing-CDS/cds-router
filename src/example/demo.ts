@@ -36,7 +36,7 @@ class UserController extends BaseController {
     }
 
     @get('/')
-    @parameter('userId',joi.string().required(),ENUM_PARAM_IN.query)
+    @parameter('userId', joi.string().required(), ENUM_PARAM_IN.query)
     doGet(ctx) {
         ctx.body = Date.now();
     }
@@ -50,6 +50,12 @@ class UserController extends BaseController {
 
     @post('/')
     doPost() {
+
+    }
+
+    @get('s')
+    @response(200, {type: 'array', items: {$ref: UserSchema}})
+    getUsers() {
 
     }
 

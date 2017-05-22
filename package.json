@@ -1,6 +1,6 @@
 {
   "name": "cds-router",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "cds,router",
   "main": "dist/lib/index.js",
   "scripts": {
