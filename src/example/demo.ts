@@ -36,6 +36,7 @@ class UserController extends BaseController {
     }
 
     @get('/')
+    @parameter('userId',joi.string().required(),ENUM_PARAM_IN.query)
     doGet(ctx) {
         ctx.body = Date.now();
     }
@@ -65,7 +66,7 @@ class AdminController extends UserController {
 
     @post('/login')
     @parameter('name', joi.string().description('名字'))
-    @parameter('list', array().items(string()), ENUM_PARAM_IN.query)
+    @parameter('list', array().items(string()).required(), ENUM_PARAM_IN.query)
     @summary('AdminController.index')
     @response(200, {$ref: AdminSchema})
     @response(202, joi.string().description('aaa'))

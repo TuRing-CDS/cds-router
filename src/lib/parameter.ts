@@ -60,15 +60,15 @@ export function parameter(name: string, schema?: joi.Schema, paramIn?: ENUM_PARA
             }
             let {error, value} = joi.validate({
                 params: ctx.params,
-                body: ctx.req.body,
-                query: ctx.req.query
+                body: ctx.request.body,
+                query: ctx.request.query
             }, tempSchema);
             if (error) {
                 return ctx.throw(400, JSON.stringify({type: 'request', message: error.message}));
             }
             ctx.params = value.params;
-            ctx.req.body = value.body;
-            ctx.req.query = value.query;
+            ctx.request.body = value.body;
+            ctx.request.query = value.query;
             return await next();
         });
 

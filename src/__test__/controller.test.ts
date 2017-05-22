@@ -14,7 +14,7 @@ describe('Controller', () => {
 
     });
 
-    it(` UserCOntroller's path should be equal '/v3/api/user'`, () => {
+    it(` UserController's path should be equal '/v3/api/user'`, () => {
 
         expect(UserController[TAG_CONTROLLER]).toBe('/v3/api/user');
 
